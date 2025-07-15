@@ -1,0 +1,19 @@
+trigger:
+  - main
+
+variables:
+  imageName: 'nodejsapp'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: Docker@2
+    displayName: 'Build and Push Docker Image to ACR'
+    inputs:
+      containerRegistry: 'ACRConnection'  
+      repository: '$(imageName)'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+      tags: |
+        $(Build.BuildId)
